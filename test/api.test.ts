@@ -1,9 +1,15 @@
 import request from "supertest";
+import { Express } from "express";
 import { createApp } from "../src/server";
+
+let app: Express;
+
+beforeEach(() => {
+  app = createApp();
+});
 
 describe("GET /chain", () => {
   it("returns the chain with just the genesis block", async () => {
-    const app = createApp();
     const res = await request(app).get("/chain");
 
     expect(res.status).toBe(200);
@@ -18,7 +24,6 @@ describe("GET /chain", () => {
 
 describe("POST /transactions", () => {
   it("queues a valid transaction and returns the next block index", async () => {
-    const app = createApp();
     const res = await request(app)
       .post("/transactions")
       .send({ sender: "alice", recipient: "bob", amount: 5 });
@@ -28,7 +33,6 @@ describe("POST /transactions", () => {
   });
 
   it("rejects an invalid transaction with 400", async () => {
-    const app = createApp();
     const res = await request(app)
       .post("/transactions")
       .send({ sender: "alice", recipient: "bob", amount: "five" });
@@ -39,8 +43,6 @@ describe("POST /transactions", () => {
 
 describe("POST /mine", () => {
   it("forges a block containing the pending tx and the mining reward", async () => {
-    const app = createApp();
-
     await request(app)
       .post("/transactions")
       .send({ sender: "alice", recipient: "bob", amount: 5 });
@@ -58,7 +60,6 @@ describe("POST /mine", () => {
   });
 
   it("grows the chain to two linked blocks", async () => {
-    const app = createApp();
     await request(app).post("/mine");
     const res = await request(app).get("/chain");
 
