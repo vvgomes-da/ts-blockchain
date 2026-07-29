@@ -53,6 +53,8 @@ The server listens on **port 5000**.
 
 ## Running
 
+### Option 1: Local (Node)
+
 Requires Node.js and npm.
 
 ```sh
@@ -63,6 +65,20 @@ npm run build && npm start   # compile to dist/ then run
 ```
 
 The server starts on `http://localhost:5000`; stop it with `Ctrl-C`.
+
+### Option 2: Docker
+
+Multi-stage build (compile TypeScript in the build stage, run only the compiled
+JS + production dependencies on a slim Node image, as the non-root `node` user):
+
+```sh
+# Build the image
+docker build -t ts-blockchain:v1 .
+
+# Run it, mapping port 5000
+docker run --rm -p 5000:5000 ts-blockchain:v1
+```
+
 
 ## Testing
 

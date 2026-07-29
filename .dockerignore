@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.git/
+.gitignore
+*.log
+*.md
+Dockerfile
+.dockerignore
+jest.config.js
+test/
+sample-transaction.json
