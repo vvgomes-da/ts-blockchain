@@ -1,5 +1,3 @@
-/** Entry point: start the blockchain HTTP server. */
-
 import { createApp } from "./server";
 
 const PORT = 5000;

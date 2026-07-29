@@ -1,7 +1,7 @@
 {
   "name": "ts-blockchain",
   "version": "0.1.0",
-  "description": "A minimal blockchain HTTP API in TypeScript, written in a functional style. A port of the sibling haskell-blockchain and clojure-blockchain projects.",
+  "description": "A minimal blockchain HTTP API in TypeScript",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
   "scripts": {
