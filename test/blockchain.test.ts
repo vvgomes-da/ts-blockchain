@@ -1,10 +1,3 @@
-/**
- * Unit tests for the pure blockchain domain logic (src/blockchain.ts).
- *
- * The module is pure (no I/O, no shared state), so these tests are deterministic
- * and need no server. Mirrors the Clojure `blockchain-test` suite.
- */
-
 import * as bc from "../src/blockchain";
 
 describe("transaction", () => {
