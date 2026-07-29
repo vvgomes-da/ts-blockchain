@@ -1,10 +1,3 @@
-/**
- * API tests for the Express layer (src/server.ts), driven by supertest.
- *
- * Each test suite gets a fresh app (fresh state) via `createApp`, so tests are
- * isolated. supertest exercises the routes without binding a real port.
- */
-
 import request from "supertest";
 import { createApp } from "../src/server";
 
@@ -12,6 +5,7 @@ describe("GET /chain", () => {
   it("returns the chain with just the genesis block", async () => {
     const app = createApp();
     const res = await request(app).get("/chain");
+
     expect(res.status).toBe(200);
     expect(res.body).toHaveLength(1);
     expect(res.body[0]).toMatchObject({
@@ -28,6 +22,7 @@ describe("POST /transactions", () => {
     const res = await request(app)
       .post("/transactions")
       .send({ sender: "alice", recipient: "bob", amount: 5 });
+
     expect(res.status).toBe(200);
     expect(res.body).toEqual({ index: 2 });
   });
@@ -37,6 +32,7 @@ describe("POST /transactions", () => {
     const res = await request(app)
       .post("/transactions")
       .send({ sender: "alice", recipient: "bob", amount: "five" });
+
     expect(res.status).toBe(400);
   });
 });
@@ -50,6 +46,7 @@ describe("POST /mine", () => {
       .send({ sender: "alice", recipient: "bob", amount: 5 });
 
     const res = await request(app).post("/mine");
+
     expect(res.status).toBe(200);
     expect(res.body.index).toBe(2);
     expect(res.body.proof).toBe(35293);
@@ -64,8 +61,8 @@ describe("POST /mine", () => {
     const app = createApp();
     await request(app).post("/mine");
     const res = await request(app).get("/chain");
+
     expect(res.body).toHaveLength(2);
-    // block 2 links to block 1
     expect(res.body[1].previousHash).not.toBeNull();
   });
 });
